@@ -1,0 +1,282 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography"; /* 加入这一行 */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  /* body { */
+    /* 方案 A: 纯色背景 */
+    /* background-color: #000488;  */
+    
+    /* 方案 B: 渐变背景 (从深蓝到更深的蓝) */
+    /* background: linear-gradient(to bottom, #0005a7, #000366); */
+    
+    /* color: white; */
+  /* } */
+  body {
+    /* 基底是深蓝，但在右上方和左下方加入暖色光晕 */
+    /* background: radial-gradient(circle at 80% 20%, rgba(255, 100, 50, 0.15), transparent 40%), 右上角的暖灯 */
+                /* radial-gradient(circle at 20% 80%, rgba(100, 50, 255, 0.15), transparent 40%), 左下角的冷暖光 */
+                /* #0005a7; 原有的深蓝色底色 */
+    /* background-attachment: fixed; 让背景固定，更有空间感 */
+    background-color: #000488; 
+
+    color: white;
+  }
+  
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  }
+
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - var(--gap))); }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration) linear infinite;
+  }
+
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+  }
+  @layer utilities {
+    /* 慢速线性旋转：模拟唱片转动 */
+    .animate-spin-slow {
+      animation: record-spin 8s linear infinite;
+    }
+  
+    /* 悬停时稍微加速，增加交互反馈 */
+    .group:hover .animate-spin-slow {
+      animation-duration: 6s;
+    }
+  
+    @keyframes record-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+/* src/app/globals.css */
+
+/* 1. 基础旋转定义 */
+@keyframes record-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: record-spin 10s linear infinite;
+}
+
+/* 2. 关键：控制播放状态 */
+.running {
+  animation-play-state: running;
+}
+.paused {
+  animation-play-state: paused;
+}
+
+/* 3. 碎片基础样式优化 */
+.shard {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  background-size: 100% 100%;
+  /* 解决抖动的关键：硬件加速 */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* --- 碎片剪裁保持不变 --- */
+.shard-1 { clip-path: polygon(45% 45%, 55% 45%, 60% 55%, 40% 60%); }
+.shard-2 { clip-path: polygon(45% 45%, 40% 0%, 70% 0%, 65% 35%, 55% 45%); }
+.shard-3 { clip-path: polygon(70% 0%, 100% 0%, 100% 30%, 80% 40%, 65% 35%); }
+.shard-4 { clip-path: polygon(55% 45%, 65% 35%, 80% 40%, 100% 30%, 100% 70%, 60% 55%); }
+.shard-5 { clip-path: polygon(100% 70%, 100% 100%, 73% 100%, 80% 80%); }
+.shard-6 { clip-path: polygon(60% 55%, 80% 80%, 70% 98%, 30% 100%, 40% 60%); }
+.shard-7 { clip-path: polygon(30% 100%, 0% 100%, 0% 68%, 20% 80%); }
+.shard-8 { clip-path: polygon(40% 60%, 20% 80%, 0% 70%, 10% 50%, 45% 45%); }
+.shard-9 { clip-path: polygon(10% 50%, 0% 45%, 0% 20%, 25% 30%); }
+.shard-10 { clip-path: polygon(45% 45%, 35% 30%, 0% 20%, 10% 0%, 40% 0%); }
+.shard-11 { clip-path: polygon(40% 0%, 42% 15%, 45% 45%, 40% 60%, 38% 100%, 35% 80%, 30% 20%, 38% 5%); } 
+.shard-12 { clip-path: polygon(55% 45%, 65% 35%, 60% 20%, 45% 45%); }
+
+/* --- 破碎时的位移和旋转（增加了rotate增强效果） --- */
+.broken-shard-1 { transform: translate(0px, 2px) rotate(2deg); }
+.broken-shard-2 { transform: translate(0px, -15px) rotate(-5deg); }
+.broken-shard-3 { transform: translate(15px, -12px) rotate(10deg); }
+.broken-shard-4 { transform: translate(18px, 0px) rotate(8deg); }
+.broken-shard-5 { transform: translate(15px, 15px) rotate(12deg); }
+.broken-shard-6 { transform: translate(0px, 18px) rotate(-8deg); }
+.broken-shard-7 { transform: translate(-15px, 15px) rotate(-10deg); }
+.broken-shard-8 { transform: translate(-12px, 8px) rotate(5deg); }
+.broken-shard-9 { transform: translate(-18px, 0px) rotate(-12deg); }
+.broken-shard-10 { transform: translate(-15px, -12px) rotate(-8deg); }
+.broken-shard-11 { transform: translate(-6px, -4px) rotate(3deg); }
+.broken-shard-12 { transform: translate(6px, -6px) rotate(-4deg); }
+
+.mask-feather {
+  mask-image: linear-gradient(to bottom, 
+    transparent 0%, 
+    black 5%, 
+    black 95%, 
+    transparent 100%
+  ), 
+  linear-gradient(to right, 
+    transparent 0%, 
+    black 5%, 
+    black 95%, 
+    transparent 100%
+  );
+  mask-composite: intersect; /* 交叉组合，让四周都柔化 */
+}
+
+/* 模拟纸质质感（可选） */
+.poster-texture::after {
+  content: "";
+  absolute: inset-0;
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* src/app/globals.css */
+
+/* 悬停增亮效果 */
+.hover-brighten {
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.hover-brighten:hover {
+  /* 亮度增加 20%，并轻微提升对比度，让颜色更鲜艳 */
+  filter: brightness(1.2) contrast(1.1); 
+  /* 配合微小的放大，更有交互感 */
+  transform: scale(1.02); 
+}
+
+/* 确保之前的羽化效果依然有效 */
+.mask-feather {
+  mask-image: radial-gradient(circle, black 60%, transparent 100%);
+  mask-size: 150% 150%;
+  mask-position: center;
+}
+}

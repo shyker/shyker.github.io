@@ -1,0 +1,87 @@
+/* src/components/magicui/broken-record.css */
+
+/* 复原后，整体缓慢旋转 */
+.record-container.assembled {
+    /* 等复原动画快结束时再开始旋转 */
+    animation: spin-slow 20s linear infinite forwards;
+    animation-delay: 0.8s;
+  }
+  
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* --- 复杂的碎片路径与散开位置定义 --- */
+  
+  /* 碎片 1：左上大块 */
+  .shard-1 {
+    clip-path: polygon(50% 50%, 0 0, 35% 0, 45% 20%, 20% 40%);
+    z-index: 2;
+  }
+  .shard-1.broken {
+    /* 向左上爆炸散开，大幅度旋转 */
+    transform: translate3d(-60px, -60px, 0) rotate(-45deg) scale(1.05);
+  }
+  
+  /* 碎片 2：顶部条状 */
+  .shard-2 {
+    clip-path: polygon(50% 50%, 35% 0, 65% 0, 60% 30%);
+    z-index: 1;
+  }
+  .shard-2.broken {
+    transform: translate3d(0px, -80px, 0) rotate(15deg) scale(1.02);
+  }
+  
+  /* 碎片 3：右上大块 */
+  .shard-3 {
+    clip-path: polygon(50% 50%, 65% 0, 100% 0, 100% 40%, 80% 35%);
+    z-index: 3;
+  }
+  .shard-3.broken {
+    transform: translate3d(70px, -50px, 0) rotate(60deg) scale(1.1);
+  }
+  
+  /* 碎片 4：右侧锯齿 */
+  .shard-4 {
+    clip-path: polygon(50% 50%, 100% 40%, 100% 70%, 85% 65%, 90% 55%);
+    z-index: 2;
+  }
+  .shard-4.broken {
+    transform: translate3d(90px, 20px, 0) rotate(30deg);
+  }
+  
+  /* 碎片 5：右下块 */
+  .shard-5 {
+    clip-path: polygon(50% 50%, 100% 70%, 100% 100%, 60% 100%, 70% 80%);
+    z-index: 4;
+  }
+  .shard-5.broken {
+    transform: translate3d(50px, 70px, 0) rotate(-25deg) scale(1.08);
+  }
+  
+  /* 碎片 6：底部条状 */
+  .shard-6 {
+    clip-path: polygon(50% 50%, 60% 100%, 30% 100%, 40% 75%);
+    z-index: 1;
+  }
+  .shard-6.broken {
+    transform: translate3d(-10px, 90px, 0) rotate(10deg);
+  }
+  
+  /* 碎片 7：左下大块 */
+  .shard-7 {
+    clip-path: polygon(50% 50%, 30% 100%, 0 100%, 0 60%, 20% 65%);
+    z-index: 3;
+  }
+  .shard-7.broken {
+    transform: translate3d(-70px, 50px, 0) rotate(-55deg) scale(1.04);
+  }
+  
+  /* 碎片 8：左侧锯齿 */
+  .shard-8 {
+    clip-path: polygon(50% 50%, 0 60%, 0 0, 20% 40%, 10% 30%);
+    z-index: 5; /* 放在最上面 */
+  }
+  .shard-8.broken {
+    transform: translate3d(-80px, -20px, 0) rotate(-80deg) scale(1.1);
+  }
