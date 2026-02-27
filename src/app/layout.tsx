@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "𝓼𝓱𝔂𝓵𝓮𝓻 𝓫𝓵𝓸𝓰",
-  description: "一位uestc的普通人",
+  description: "一位uestc的普通本科生",
 };
 
 export default function RootLayout({
