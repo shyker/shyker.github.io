@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-// 【核心修改 1】：在组件外部定义全局单例，防止随着组件销毁而重置
+// 【核心修改】：全局状态管理
 let globalAudio: HTMLAudioElement | null = null;
+let globalSongsStr = "";      // 记录当前单例正在运行哪一组歌单
 let globalTrackIndex = 0;
 let globalIsPlaying = false;
 
@@ -19,15 +20,37 @@ export default function BrokenRecord({
   image = "/image/record/record3.png",
   className 
 }: BrokenRecordProps) {
-  // 根据全局状态初始化 UI
-  const [isAssembled, setIsAssembled] = useState(globalIsPlaying);
+  const [isAssembled, setIsAssembled] = useState(false);
   const shards = Array.from({ length: 12 }, (_, i) => i + 1);
+  
+  // 强制同步 UI 状态的方法
+  const syncUI = () => {
+    setIsAssembled(globalIsPlaying);
+  };
 
   useEffect(() => {
-    // 【核心修改 2】：只在不存在时初始化音频对象
-    if (typeof window !== "undefined" && !globalAudio) {
-      globalAudio = new Audio(songs[globalTrackIndex]);
+    if (typeof window === "undefined") return;
+
+    // 1. 将传入的歌单转为字符串，用于对比
+    const currentSongsStr = JSON.stringify(songs);
+
+    // 2. 初始化或切换歌单逻辑
+    if (!globalAudio) {
+      // 第一次运行：初始化
+      globalAudio = new Audio(songs[0]);
+      globalSongsStr = currentSongsStr;
+      globalTrackIndex = 0;
+    } else if (globalSongsStr !== currentSongsStr) {
+      // 【关键修复】：如果页面歌单变了，停止旧的，换成新的
+      globalAudio.pause();
+      globalAudio.src = songs[0];
+      globalSongsStr = currentSongsStr;
+      globalTrackIndex = 0;
+      globalIsPlaying = false; // 换了碟，默认先别转
     }
+
+    // 同步当前组件的 UI 状态
+    syncUI();
 
     const handleEnded = () => {
       const nextIndex = Math.floor(Math.random() * songs.length);
@@ -38,28 +61,25 @@ export default function BrokenRecord({
       }
     };
 
-    globalAudio?.addEventListener("ended", handleEnded);
+    globalAudio.addEventListener("ended", handleEnded);
 
-    // 【核心修改 3】：卸载时不暂停音乐，只移除监听器
     return () => {
-      if (globalAudio) {
-        globalAudio.removeEventListener("ended", handleEnded);
-        // 这里删除了 pause()，音乐会继续在后台运行
-      }
+      globalAudio?.removeEventListener("ended", handleEnded);
+      // 注意：这里依然不执行 pause()，让它在后台跑
     };
-  }, [songs]); 
+  }, [songs]); // 监听 songs 变化
 
   const handleClick = () => {
+    if (!globalAudio) return;
+
     const nextState = !isAssembled;
     setIsAssembled(nextState);
-    globalIsPlaying = nextState; // 更新全局播放状态
+    globalIsPlaying = nextState;
 
-    if (globalAudio) {
-      if (nextState) {
-        globalAudio.play().catch((e) => console.log("播放被拦截:", e));
-      } else {
-        globalAudio.pause();
-      }
+    if (nextState) {
+      globalAudio.play().catch((e) => console.log("播放被拦截:", e));
+    } else {
+      globalAudio.pause();
     }
   };
 
