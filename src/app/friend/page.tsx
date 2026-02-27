@@ -44,6 +44,8 @@ export default function Home() {
         brightnessHover={true}  // 悬停亮度增加
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
         flickerHover={true}  // 开启闪烁效果
+        triggerOn="click" dialogueId="yyyyyy"
+
 
       />
     <div onClick={() => {
@@ -111,19 +113,20 @@ export default function Home() {
     </div>
 
     <div onClick={() => {
-        setTvChannel("/image/friends/rumublog.png");
-        setTvHref("https://rumunius.top/"); // 假设这是你要跳转的地址
+        setTvChannel("/image/friends/klareblog.png");
+        setTvHref("https://klare.cc/"); // 假设这是你要跳转的地址
       }}>
     <PosterModule
-        x={900} y={130} 
+        x={900} y={138} 
         width={100} height={100}
         zIndex={100}
-        rotate={-2}
-        image="/image/friends/rumu2.png" 
-        title="Rumu" 
+        rotate={6}
+        image="/image/friends/klare.png" 
+        title="klare" 
+        titleColor="black"
         hazy={false}         //关闭朦胧，展示原图
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
-        triggerOn="click" dialogueId="muru"
+        triggerOn="click" dialogueId="klare"
 
     /></div>
     <div onClick={() => {
@@ -177,7 +180,7 @@ export default function Home() {
       }}>
     <PosterModule
         x={1260} y={530} 
-        width={270} height={270} 
+        width={200} height={200} 
         rotate={6}
         image="/image/friends/fuxi1.png" 
         hazy={false}         //关闭朦胧，展示原图
@@ -307,6 +310,22 @@ export default function Home() {
         // titleColor="blue" // 克莱因蓝
     />
     </div>
+    <div onClick={() => {
+        setTvChannel("/image/friends/autblog.png");
+        setTvHref("https://aut-11.github.io/mysite/splash/"); // 假设这是你要跳转的地址
+      }}>
+    <PosterModule
+        x={1200} y={360} 
+        width={150} height={150} 
+        rotate={0}
+        image="/image/friends/aut.png" 
+        hazy={false}         //关闭朦胧，展示原图
+        isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
+        title="aut"
+        triggerOn="click" dialogueId="aut"
+
+    />
+    </div>
     <PosterModule
         x={1450} y={370} 
         width={90} height={100} 
@@ -382,14 +401,14 @@ export default function Home() {
         hazy={false}         //关闭朦胧，展示原图
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
     />
-    <PosterModule
+    {/* <PosterModule
         x={1200} y={380} 
         width={100} height={100} 
         rotate={30}
         image="/image/deco/deco9.png" 
         hazy={false}         //关闭朦胧，展示原图
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
-    />
+    /> */}
     <PosterModule
         x={1400} y={200} 
         width={200} height={200} 
@@ -436,8 +455,19 @@ export default function Home() {
         hazy={false}         //关闭朦胧，展示原图
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
     />
-    <div className="fixed top-0 right-70 z-00 pointer-events-auto">
-            <BrokenRecord songs={[
+    <PosterModule
+        x={1400} y={630} 
+        width={160} height={160} 
+        rotate={0}
+        gifImage="/image/deco/dimond1.gif" 
+        hazy={false}         //关闭朦胧，展示原图
+        isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
+        // title="xiaozhiqiao"
+        // triggerOn="click" dialogueId="xiaozhiqiao"
+
+    />
+      <div className={`fixed top-15 right-73 z-0 pointer-events-auto w-70 h-70`}>
+      <BrokenRecord songs={[
                       "/audio/friends.m4a",
             ]} />
           </div>

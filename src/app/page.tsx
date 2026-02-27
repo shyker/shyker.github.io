@@ -12,18 +12,18 @@ import { WhoAmI } from "@/components/magicui/whoami";
 // 🛠️ 修复：对象属性中的字符串也建议使用反引号，确保数据解析安全
 const ALL_POSTS = [
   {
-    name: "ℱ𝑜𝓇 𝒯𝒽𝑜𝓈𝑒 ℐ ℒ𝑜𝓋𝑒",
-    description: "𝒮𝓉𝒶𝓎 𝒲𝒽𝑒𝓇𝑒",
-    href: "#",
+    name: "𝕋𝕙𝕖ℂ𝕠𝕞𝕞𝕦𝕟𝕚𝕤𝕥𝕄𝕒𝕟𝕚𝕗𝕖𝕤𝕥𝕠",
+    description: "𝕄𝕪 𝔽𝕒𝕚𝕥𝕙",
+    href: "/blog/TheCommunistManifesto",
     cta: "read",
     className: `col-span-3 lg:col-span-3 min-h-[100px]`,
     Icon: Pencil1Icon,
-    dialogueId: "bento_music",
+    dialogueId: "bento_communist",
     triggerOn: "hover" as const,
     background: (
       <div className={`absolute inset-0`}>
         <img 
-          src="/image/flower1.png" 
+          src="/image/deco/communist.jpg" 
           className={`absolute inset-0 h-full w-full object-cover opacity-60 transition-all duration-300 group-hover:scale-105`} 
         />
         <div className={`absolute inset-0 bg-gradient-to-t from-[#000488] via-[#000488]/10 to-transparent`} />
@@ -37,7 +37,7 @@ const ALL_POSTS = [
     cta: "read",
     className: `col-span-3 lg:col-span-3 min-h-[100px]`,
     Icon: Pencil1Icon,
-    dialogueId: "bento_eye",
+    dialogueId: "bento_redis2",
     triggerOn: "hover" as const,
     background: (
       <div className={`absolute inset-0`}>
@@ -105,7 +105,7 @@ export default function Home() {
     <main className={`relative min-h-screen bg-[#000488] text-white overflow-x-hidden`}>
 
       {/* --- 视觉装饰组件 --- */}
-      <div className={`fixed top-0 right-70 z-0 pointer-events-auto`}>
+      <div className={`fixed top-15 right-73 z-0 pointer-events-auto w-70 h-70`}>
       <BrokenRecord songs={[
           "/audio/seeu.m4a",
           "/audio/alex1.m4a",

@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { WhoAmI } from "@/components/magicui/whoami";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { motion } from "framer-motion";
+import BrokenRecord from "@/components/magicui/broken-record";
 
 interface AboutClientProps {
   metadata: any;
@@ -61,6 +62,22 @@ export default function AboutClient({ metadata, content }: AboutClientProps) {
         </article>
       </motion.div>
 
+<div className={`fixed top-0 right-10 z-0 pointer-events-auto w-90 h-90`}>
+      <BrokenRecord image="/image/deco/songs.png" songs={[
+          "/audio/ShenHai.m4a",
+          "/audio/Warming.m4a",
+          "/audio/NightLight.m4a",
+          "/audio/SadnessBurialInReality.m4a",
+          "/audio/LeaveLikeLeaf.m4a",
+          "/audio/ICantTouchTheWind.m4a",
+          "/audio/CrossWhoILove.m4a",
+          "/audio/FlameYoung.m4a",
+          "/audio/AboveWind.m4a",
+          "/audio/MadMud.m4a",
+          // "/audio/Antent1.m4a"
+          // "/audio/friends/summer_night.mp3"
+]} />
+      </div>
       {/* 角色组件 */}
       <WhoAmI 
         x={0} y={350} width={500} height={500} 
