@@ -260,10 +260,10 @@ export default function Home() {
         showTextAlways={true}   // 默认显示文字
 
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
-        title="my favorite game"
+        title="My favorite game"
     /></div>
     <div onClick={() => {
-        setTvChannel("/image/friends/aununoblog2.png");
+        setTvChannel("/image/friends/Aununoblog2.png");
         setTvHref("https://aununo.xyz"); // 假设这是你要跳转的地址
       }}>
     <PosterModule
