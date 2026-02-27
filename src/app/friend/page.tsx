@@ -197,7 +197,7 @@ export default function Home() {
         x={1170} y={630} 
         width={170} height={170} 
         rotate={6}
-        image="/image/friends/Jerry2.png" 
+        image="/image/friends/jerry2.png" 
         hazy={false}         //关闭朦胧，展示原图
         isTransparent={true}   // 🔥 开启特殊处理：无边框、无阴影、无渐变
         title='Jerry'
