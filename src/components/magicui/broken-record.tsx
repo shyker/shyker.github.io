@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-// 【核心修改】：全局状态管理
+// 【全局单例状态】
 let globalAudio: HTMLAudioElement | null = null;
-let globalSongsStr = "";      // 记录当前单例正在运行哪一组歌单
+let globalSongsStr = "";      
 let globalTrackIndex = 0;
 let globalIsPlaying = false;
 
@@ -23,41 +23,47 @@ export default function BrokenRecord({
   const [isAssembled, setIsAssembled] = useState(false);
   const shards = Array.from({ length: 12 }, (_, i) => i + 1);
   
-  // 强制同步 UI 状态的方法
-  const syncUI = () => {
-    setIsAssembled(globalIsPlaying);
+  // 【辅助函数】：获取一个不与当前索引重复的随机索引
+  const getRandomIndex = (excludeIndex: number, length: number) => {
+    if (length <= 1) return 0;
+    let newIndex = Math.floor(Math.random() * length);
+    // 如果随机到了当前正在播的，就再随机一次（简单防重复）
+    while (newIndex === excludeIndex) {
+      newIndex = Math.floor(Math.random() * length);
+    }
+    return newIndex;
   };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // 1. 将传入的歌单转为字符串，用于对比
     const currentSongsStr = JSON.stringify(songs);
 
-    // 2. 初始化或切换歌单逻辑
-    if (!globalAudio) {
-      // 第一次运行：初始化
-      globalAudio = new Audio(songs[0]);
+    // 1. 初始化或切碟逻辑
+    if (!globalAudio || globalSongsStr !== currentSongsStr) {
+      if (globalAudio) globalAudio.pause();
+
+      // 【核心修改】：初始化时就随机选一首歌，而不是固定 songs[0]
+      const startIndex = Math.floor(Math.random() * songs.length);
+      globalTrackIndex = startIndex;
+      
+      globalAudio = new Audio(songs[startIndex]);
       globalSongsStr = currentSongsStr;
-      globalTrackIndex = 0;
-    } else if (globalSongsStr !== currentSongsStr) {
-      // 【关键修复】：如果页面歌单变了，停止旧的，换成新的
-      globalAudio.pause();
-      globalAudio.src = songs[0];
-      globalSongsStr = currentSongsStr;
-      globalTrackIndex = 0;
-      globalIsPlaying = false; // 换了碟，默认先别转
+      globalIsPlaying = false; 
     }
 
-    // 同步当前组件的 UI 状态
-    syncUI();
+    // 同步 UI
+    setIsAssembled(globalIsPlaying);
 
     const handleEnded = () => {
-      const nextIndex = Math.floor(Math.random() * songs.length);
+      // 【核心修改】：播放结束时，选取下一个随机索引
+      const nextIndex = getRandomIndex(globalTrackIndex, songs.length);
       globalTrackIndex = nextIndex;
+      
       if (globalAudio) {
         globalAudio.src = songs[nextIndex];
-        globalAudio.play();
+        // 自动播放下一首
+        globalAudio.play().catch(e => console.log("Next track blocked:", e));
       }
     };
 
@@ -65,13 +71,11 @@ export default function BrokenRecord({
 
     return () => {
       globalAudio?.removeEventListener("ended", handleEnded);
-      // 注意：这里依然不执行 pause()，让它在后台跑
     };
-  }, [songs]); // 监听 songs 变化
+  }, [songs]); 
 
   const handleClick = () => {
     if (!globalAudio) return;
-
     const nextState = !isAssembled;
     setIsAssembled(nextState);
     globalIsPlaying = nextState;
