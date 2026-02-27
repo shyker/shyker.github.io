@@ -3,66 +3,70 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-// 1. 在参数类型里增加 image 选项
+// 【核心修改 1】：在组件外部定义全局单例，防止随着组件销毁而重置
+let globalAudio: HTMLAudioElement | null = null;
+let globalTrackIndex = 0;
+let globalIsPlaying = false;
+
 interface BrokenRecordProps {
   songs?: string[]; 
-  image?: string;   // 新增：唱片图片路径
+  image?: string;   
   className?: string;
 }
 
 export default function BrokenRecord({ 
   songs = ["/audio/bgm/default.mp3"], 
-  image = "/image/record/record3.png", // 2. 默认值设为原来的 record3
+  image = "/image/record/record3.png",
   className 
 }: BrokenRecordProps) {
-  const [isAssembled, setIsAssembled] = useState(false);
+  // 根据全局状态初始化 UI
+  const [isAssembled, setIsAssembled] = useState(globalIsPlaying);
   const shards = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      audioRef.current = new Audio(songs[currentTrackIndex]);
+    // 【核心修改 2】：只在不存在时初始化音频对象
+    if (typeof window !== "undefined" && !globalAudio) {
+      globalAudio = new Audio(songs[globalTrackIndex]);
     }
 
     const handleEnded = () => {
       const nextIndex = Math.floor(Math.random() * songs.length);
-      setCurrentTrackIndex(nextIndex);
-      if (audioRef.current) {
-        audioRef.current.src = songs[nextIndex];
-        audioRef.current.play();
+      globalTrackIndex = nextIndex;
+      if (globalAudio) {
+        globalAudio.src = songs[nextIndex];
+        globalAudio.play();
       }
     };
 
-    audioRef.current?.addEventListener("ended", handleEnded);
+    globalAudio?.addEventListener("ended", handleEnded);
 
+    // 【核心修改 3】：卸载时不暂停音乐，只移除监听器
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.removeEventListener("ended", handleEnded);
-        audioRef.current = null;
+      if (globalAudio) {
+        globalAudio.removeEventListener("ended", handleEnded);
+        // 这里删除了 pause()，音乐会继续在后台运行
       }
     };
-  }, [songs, currentTrackIndex]);
+  }, [songs]); 
 
   const handleClick = () => {
     const nextState = !isAssembled;
     setIsAssembled(nextState);
+    globalIsPlaying = nextState; // 更新全局播放状态
 
-    if (audioRef.current) {
+    if (globalAudio) {
       if (nextState) {
-        audioRef.current.play().catch((e) => console.log("播放被拦截:", e));
+        globalAudio.play().catch((e) => console.log("播放被拦截:", e));
       } else {
-        audioRef.current.pause();
+        globalAudio.pause();
       }
     }
   };
 
   return (
     <div 
-    className={cn("w-full h-full flex items-center justify-center cursor-pointer", className)}
-    onClick={handleClick}
+      className={cn("w-full h-full flex items-center justify-center cursor-pointer", className)} 
+      onClick={handleClick}
     >
       <div className={cn(
         "relative w-full h-full transition-transform duration-1000 ease-in-out transform-gpu animate-spin-slow",
@@ -76,7 +80,6 @@ export default function BrokenRecord({
               `shard-${id}`,
               !isAssembled && `broken-shard-${id}`
             )}
-            // 3. 使用 style 动态注入图片路径
             style={{ 
               backgroundImage: `url('${image}')`,
               pointerEvents: 'none' 
