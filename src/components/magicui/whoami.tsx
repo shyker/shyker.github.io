@@ -19,7 +19,6 @@ export const WhoAmI = ({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const getApiUrl = () => {
-    // 生产环境会读取 .env.production 中的变量
     return process.env.NEXT_PUBLIC_API_URL || `https://47.108.128.134:8443`;
   };
 
@@ -47,10 +46,10 @@ export const WhoAmI = ({
       setCurrentText(data.message);
       setShowDialog(true);
       if (timerRef.current) clearTimeout(timerRef.current);
-      // 根据字数动态调整显示时长，增强体验
       timerRef.current = setTimeout(() => setShowDialog(false), 2000 + data.message.length * 200);
 
     } catch (err) {
+      // 只有手动点击且失败时才跳转
       if (manualTrigger === 'click') {
         setCurrentText("Click Here To Start...");
         setShowDialog(true);
@@ -61,11 +60,26 @@ export const WhoAmI = ({
     }
   };
 
+  // ✨ 修复点：重新启用全局事件监听器
   useEffect(() => {
     if (!mounted) return;
+
+    // 1. 初始进入页面触发一次
     const initTimeout = setTimeout(() => { handleTrigger(`entry`); }, 2500);
-    return () => clearTimeout(initTimeout);
-  }, [mounted]);
+
+    // 2. 核心监听逻辑：让小人能“听到”其他页面的说话请求
+    const handleGlobalTrigger = (e: any) => {
+      const { type, id } = e.detail; // 从事件中提取动作类型(type)和人物ID(id)
+      handleTrigger(type, id);
+    };
+
+    window.addEventListener("character-speak", handleGlobalTrigger);
+
+    return () => {
+      clearTimeout(initTimeout);
+      window.removeEventListener("character-speak", handleGlobalTrigger);
+    };
+  }, [mounted, pageId]);
 
   if (!mounted) return null;
 
@@ -81,7 +95,6 @@ export const WhoAmI = ({
       <AnimatePresence mode="wait">
         {showDialog && (
           <motion.div 
-            // 修复：添加明确的动画生命周期，解决初次弹出异常
             initial={{ opacity: 0, x: 20, scale: 0.8 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 10, scale: 0.9 }}
@@ -93,7 +106,6 @@ export const WhoAmI = ({
             )}
           >
             {currentText}
-            {/* 气泡小三角 */}
             <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white/10 border-t border-r border-white/30 rotate-45 backdrop-blur-md" />
           </motion.div>
         )}
