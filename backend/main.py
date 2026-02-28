@@ -9,20 +9,26 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 # 【修复建议】：添加允许的来源
+# /blog/backend/main.py
+
+app = FastAPI()
+
+# 【最终确认】：允许的来源
 origins = [
     "http://localhost:3000",
     "http://47.108.128.134:3000",
-    "https://shyker.github.io", # 必须加上这个！
+    "https://shyker.github.io", 
+    # 如果之后你通过隧道地址直接访问调试，也可以加上隧道地址
+    "https://stylish-fare-soldiers-referring.trycloudflare.com",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins, # 或者调试阶段直接写 ["*"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 DIALOGUE_DATA = {
     "default": ["designing", "......"],
     "click": ["designing"],

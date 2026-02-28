@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-
+//123
 interface WhoAmIProps {
   x?: number;
   y?: number;
@@ -41,17 +41,25 @@ export const WhoAmI = ({
     const currentPage = overrideId || pageId;
 
     try {
+      // 这里的 apiUrl 会自动读取你 .env.production 里的 Cloudflare 隧道地址
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || `http://localhost:8000`;
+      
       const response = await fetch(`${apiUrl}/api/get-dialogue`, {        
         method: `POST`,
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          // ✨ 核心修复：绕过 Cloudflare 的浏览器警告页面
+          "cf-no-browser-warning": "true" 
+        },
         body: JSON.stringify({ 
           trigger_type: currentAction, 
           page_id: currentPage 
         }),
       });
+
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
       const data = await response.json();
-      
       const selectedText = data.message;
       const duration = 2000 + selectedText.length * 200;
 
@@ -64,6 +72,10 @@ export const WhoAmI = ({
       }, duration);
     } catch (err) {
       console.error("Character Dialogue Error: 无法连接至后端。", err);
+      // 容错处理：连接失败时显示默认文字，防止小人完全变哑巴
+      setCurrentText("...... (连接超时)");
+      setShowDialog(true);
+      timerRef.current = setTimeout(() => setShowDialog(false), 2000);
     }
   };
 
@@ -92,7 +104,6 @@ export const WhoAmI = ({
 
   return (
     <div
-      /* 🔥 关键修改：将容器层级提升至 z-[9999]，确保超过页面所有其他组件 */
       className={cn(`${"fixed z-[9999] select-none"}`, className)}
       style={{ top: y, right: x, width: width, height: height, pointerEvents: `none` }}
     >
@@ -119,7 +130,7 @@ export const WhoAmI = ({
         }
       `}</style>
 
-      {/* 点击热区：层级同样提升 */}
+      {/* 点击热区 */}
       <div 
         onClick={() => handleTrigger(`click`)}
         className={cn(`${"absolute pointer-events-auto z-[10001]"}`, showDialog ? `${"cursor-default"}` : `${"cursor-pointer"}`)}
@@ -140,11 +151,9 @@ export const WhoAmI = ({
             animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, x: 10, scale: 0.95, filter: "blur(5px)" }}
             transition={{ type: "spring", damping: 20, stiffness: 150 }}
-            /* 🔥 提升 z-index 至 10000 */
             className={`${"absolute top-[25%] right-[80%] z-[10000] bg-white/10 backdrop-blur-md border border-white/30 px-5 py-3 rounded-2xl text-white text-sm tracking-widest w-fit min-w-[160px] max-w-[380px] whitespace-normal break-all leading-relaxed shadow-2xl pointer-events-none"}`}
           >
             {currentText}
-            {/* 对话框小三角 */}
             <div className={`${"absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white/10 border-t border-r border-white/30 rotate-45 backdrop-blur-md"}`} />
           </motion.div>
         )}
