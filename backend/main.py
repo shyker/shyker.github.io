@@ -1,36 +1,49 @@
-# backend/main.py
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+import uvicorn
 import random
 
-# backend/main.py
-from fastapi.middleware.cors import CORSMiddleware
-
 app = FastAPI()
 
-# 【修复建议】：添加允许的来源
-# /blog/backend/main.py
-
-app = FastAPI()
-
-# 【最终确认】：允许的来源
+# 1. 配置 CORS：允许你的 GitHub Pages 博客访问
 origins = [
+    "https://shyker.github.io",
     "http://localhost:3000",
-    "http://47.108.128.134:3000",
-    "https://shyker.github.io", 
-    # 如果之后你通过隧道地址直接访问调试，也可以加上隧道地址
-    "https://stylish-fare-soldiers-referring.trycloudflare.com",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, # 或者调试阶段直接写 ["*"]
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 2. ✨ 信任激活页：解决 ERR_CONNECTION_CLOSED 的核心方案
+@app.get("/api/trust", response_class=HTMLResponse)
+async def trust_page():
+    html_content = """
+    <html>
+        <head><title>Verify</title></head>
+        <body style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; background:#0f172a; color:white; text-align:center;">
+            <div style="padding:40px; border:1px solid #334155; border-radius:16px; background:#1e293b; box-shadow:0 10px 25px rgba(0,0,0,0.5); max-width:400px;">
+                <h2 style="color:#818cf8; margin-bottom:10px;">Verify</h2>
+                <p style="color:#94a3b8; line-height:1.6;">如果你看到“证书不被信任”，请点击“高级”并选择“继续前往”以授权。授权后对话功能即可正常工作。</p>
+                <div style="margin: 25px 0; border-top:1px solid #334155;"></div>
+                <a href="https://shyker.github.io" 
+                   style="padding:12px 24px; background:#6366f1; color:white; text-decoration:none; border-radius:8px; font-weight:bold;">
+                   Comfirm,Back To Blog
+                </a>
+            </div>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
+
+# 3. 丰富的人物对话数据库
 DIALOGUE_DATA = {
-    "default": ["designing", "......"],
+       "default": ["designing", "......"],
     "click": ["designing"],
     
     # 首页逻辑
@@ -186,26 +199,20 @@ DIALOGUE_DATA = {
     "klare_click":["神秘大嗨客之一","教我web","给个flag"],
     "aut_click":["我也想接入恋时代","AuT,睡觉方向负责人"],
     "yyyyyy_click":["明天想见的人","shylef","How to Unlock?","𝚠𝚑𝚘𝚜𝚑𝚎𝚒𝚜?"]
-
-
 }
 
+# 4. 路由逻辑
 @app.post("/api/get-dialogue")
 async def get_dialogue(data: dict = Body(...)):
     trigger_type = data.get("trigger_type", "default")
     page_id = data.get("page_id", "home")
     
-    # 构造复合键：如 "about_entry"
     combined_key = f"{page_id}_{trigger_type}"
     
-    # 优先级查找：
-    # 1. 页面_动作 (如 about_click)
     if combined_key in DIALOGUE_DATA:
         choices = DIALOGUE_DATA[combined_key]
-    # 2. 页面通用 (如 about)
     elif page_id in DIALOGUE_DATA:
         choices = DIALOGUE_DATA[page_id]
-    # 3. 动作通用 (如 click)
     elif trigger_type in DIALOGUE_DATA:
         choices = DIALOGUE_DATA[trigger_type]
     else:
@@ -214,6 +221,4 @@ async def get_dialogue(data: dict = Body(...)):
     return {"message": random.choice(choices)}
 
 if __name__ == "__main__":
-    import uvicorn
-    # 确保端口与前端一致
     uvicorn.run(app, host="0.0.0.0", port=8000)
