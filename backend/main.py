@@ -3,11 +3,22 @@ from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 import random
 
+# backend/main.py
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+# 【修复建议】：添加允许的来源
+origins = [
+    "http://localhost:3000",
+    "http://47.108.128.134:3000",
+    "https://shyker.github.io", # 必须加上这个！
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
