@@ -233,7 +233,7 @@ DIALOGUE_DATA = {
     "togetherhand_click":["手也很乖巧","摸摸"],
     "togetherus3_click":["我们的小家","谁家","最近有点忙，没怎么顾家","不过还是很幸福","打卡都是让你的"],
     "togetherbear_click":["Hi","和你打个招呼"],
-    # "togetherbear_click":[],
+    "togetherbab_click":["西蓝花宝","啥时候再添一个宝","有点笨笨的"],
     "together6ygif_click":["看起来有点幸福","冒泡泡了","xm亏体"],
     "togethergif4_click":["表演绝活，虽然我本人不会","厉不厉害","这个骷髅头有点故事,以后告诉你"],
     "togetherusgif_click":["靠着你呢","靠着我呢"],
