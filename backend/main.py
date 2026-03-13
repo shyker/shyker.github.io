@@ -198,12 +198,56 @@ DIALOGUE_DATA = {
     "whynot_click":['uestc的一座大山',"你们ml的怎么都那么卷啊","xm珠峰"],
     "klare_click":["神秘大嗨客之一","教我web","给个flag"],
     "aut_click":["我也想接入恋时代","AuT,睡觉方向负责人"],
-    "yyyyyy_click":["明天想见的人","shylef","How to Unlock?","𝚠𝚑𝚘𝚜𝚑𝚎𝚒𝚜?"]
+    "yyyyyy_click":["明天想见的人","shylef","How to Unlock?","𝚠𝚑𝚘𝚜𝚑𝚎𝚒𝚜?"],
+    "together_entry":["be together"],
+    "together_click":["这一天，我们在一起了",
+                      "拥抱真的好棒，身上都是你的味道，好暖和",
+                      "好想就这样一直抱着你",
+                      "你蹭蹭我的脖子，我蹭蹭你的头",
+                      "身上香香的",
+                      "你的，是你的都让我着迷",
+                      "真的好喜欢啊怎么办",
+                      "这似乎是有一点迟来的表白信",
+                      "你说我的心跳的有点快，那不然呢",
+                      "我无法忘怀这一切的一切，每一个瞬间",
+                      "那就是3.14号吧",
+                      "14号发生了许多事情",
+                      "我的一部分早就在你这里了",
+                      "在你旁边就很安心，希望你也是",
+                      "明天我们吃什么",
+                      "日复一日的平常，我一直在想",
+                      "你对我真好",
+                      "喜欢你，微微低下头"
+                      "每次和你说话，嘴角都止不住上扬",
+                      "今天天气刚刚好，还是我好想你",
+                      "你来了吗，哦不是你，我再等一会",
+                      "晚安哦厌学小姐",
+                      "早上好厌学小姐",
+                      "这一页我想我会更新许多我们的点滴，再整理整理",
+                      "可能没有之前那么细节，我会一点点建起来的"
+                      ],
+    "together6y1_click":["好喜欢","有你拍的好多照片","记录点滴"],
+    "togethershyler2_click":["我拍的不是很好","我怕把你拍的不好看","可你在我眼里真的好好看"],
+    "togetherghost_click":["俩小鬼","飘飘荡荡飞起来"],
+    "togetherdenji_click":["颜色互换!","电锯人与蕾塞","牵一下"],
+    "togetherhand_click":["手也很乖巧","摸摸"],
+    "togetherus3_click":["我们的小家","谁家","最近有点忙，没怎么顾家","不过还是很幸福","打卡都是让你的"],
+    "togetherbear_click":["Hi","和你打个招呼"],
+    # "togetherbear_click":[],
+    "together6ygif_click":["看起来有点幸福","冒泡泡了","xm亏体"],
+    "togethergif4_click":["表演绝活，虽然我本人不会","厉不厉害","这个骷髅头有点故事,以后告诉你"],
+    "togetherusgif_click":["靠着你呢","靠着我呢"],
+    "togetherchat_click":["想我了就和我聊聊天吧","always be here"],
+    
+
+
+
 }
 
 # 4. 路由逻辑
 @app.post("/api/get-dialogue")
 async def get_dialogue(data: dict = Body(...)):
+
     trigger_type = data.get("trigger_type", "default")
     page_id = data.get("page_id", "home")
     
