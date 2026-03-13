@@ -36,8 +36,8 @@ export const WhoAmI = ({
 
   const getApiUrl = () => {
     // 优先读取生产环境变量，确保部署后能连接到 8443 端口
-    // return process.env.NEXT_PUBLIC_API_URL || `https://47.108.128.134:8443`;
-    return `http://localhost:8000`;
+    return process.env.NEXT_PUBLIC_API_URL || `https://47.108.128.134:8443`;
+    // return `http://localhost:8000`;
   };
 
   useEffect(() => { setMounted(true); }, []);
