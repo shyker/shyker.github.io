@@ -82,6 +82,14 @@ export function TogetherClient({ content }: TogetherClientProps) {
           "/image/together/gifts.jpg",
           "/image/together/firsthug.jpg",
           "/image/together/listen1.jpg",
+          "/image/together/tea1.jpg",
+          "/image/together/tea2.jpg",
+          "/image/together/lock.jpg",
+          // "/image/together/together.jpg",
+          "/image/together/walk1.jpg",
+          "/image/together/douyin.jpg",
+          "/image/together/douyin1.jpg",
+          "/image/together/together.jpg",
 
           // "/image/together/pick2.jpg",
           // "/image/weusour/back2.jpg",
@@ -101,6 +109,13 @@ export function TogetherClient({ content }: TogetherClientProps) {
           "时刻都能想起的小桌",
           "第一次拥抱的地方",
           "还要听很久很久",
+          "茶泡饭",
+          "谁泡谁",
+          "🔒",
+          "走了好久，非常顽强的厌学小姐",
+          "这是是什么火",
+          "原来是爱如火",
+          "3.14于东湖",
           // "飞起来咯",
         ]}
         width={320}
