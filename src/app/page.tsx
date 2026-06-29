@@ -12,6 +12,25 @@ import { WhoAmI } from "@/components/magicui/whoami";
 // 🛠️ 修复：对象属性中的字符串也建议使用反引号，确保数据解析安全
 const ALL_POSTS = [
   {
+    name: "钟摆蠕虫",
+    description: " ̶T̶i̶c̶k̶ ̶T̶i̶c̶k̶ ̶T̶i̶c̶k̶i̶n̶g̶",
+    href: "/blog/worm",
+    cta: "read",
+    className: `col-span-3 lg:col-span-3 min-h-[100px]`,
+    Icon: Pencil1Icon,
+    dialogueId: "bento_worm",
+    triggerOn: "hover" as const,
+    background: (
+      <div className={`absolute inset-0`}>
+        <img 
+          src="/image/posts/worm-4-1.png" 
+          className={`absolute inset-0 h-full w-full object-cover opacity-60 transition-all duration-300 group-hover:scale-105`} 
+        />
+        <div className={`absolute inset-0 bg-gradient-to-t from-[#000488] via-[#000488]/10 to-transparent`} />
+      </div>
+    )},
+
+    {
     name: "𝕋𝕙𝕖ℂ𝕠𝕞𝕞𝕦𝕟𝕚𝕤𝕥𝕄𝕒𝕟𝕚𝕗𝕖𝕤𝕥𝕠",
     description: "𝕄𝕪 𝔽𝕒𝕚𝕥𝕙",
     href: "/blog/TheCommunistManifesto",

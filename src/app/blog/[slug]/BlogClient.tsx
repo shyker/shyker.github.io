@@ -6,6 +6,41 @@ import remarkGfm from "remark-gfm";
 import { WhoAmI } from "@/components/magicui/whoami";
 import { PosterModule } from "@/components/magicui/PosterModule";
 
+// ✨ 每篇文章对应的 WhoAmI 插图映射表
+// key: slug (即 .md 文件名), value: 图片路径 (相对于 public 目录)
+const WHOAMI_IMAGE_MAP: Record<string, string> = {
+  about: "/image/friends/whoami.png",
+  whoami: "/image/friends/whoami.png",
+  redis1: "/image/friends/whoami.png",
+  redis2: "/image/friends/whoami.png",
+  re1: "/image/friends/whoami.png",
+  worm: "/image/posts/worm-1-2.png",
+  TheCommunistManifesto: "/image/friends/whoami.png",
+};
+
+// 获取某篇文章的 whoami 插图，未配置时回退到默认图
+function getWhoAmIImage(slug: string): string {
+  return WHOAMI_IMAGE_MAP[slug] ?? "/image/friends/whoami.png";
+}
+
+// ✨ 每篇文章对应的背景氛围样式
+// glowColor: Tailwind 颜色类名（如 "blue-500", "emerald-600"），默认 "orange-500"
+interface BlogStyle {
+  glowColor?: string;
+}
+const BLOG_STYLE_MAP: Record<string, BlogStyle> = {
+  // 示例：不同文章用不同颜色的光晕
+  worm: { glowColor: "none" },
+  // CTFplus: { glowColor: "emerald-500" },
+  // TheCommunistManifesto: { glowColor: "red-700" },
+  // re1: { glowColor: "purple-500" },
+  // together: { glowColor: "pink-500" },
+};
+
+function getBlogStyle(slug: string): BlogStyle {
+  return BLOG_STYLE_MAP[slug] ?? {};
+}
+
 interface BlogClientProps {
   slug: string;
   content: string;
@@ -15,6 +50,29 @@ interface BlogClientProps {
 export function BlogClient({ slug, content, toc }: BlogClientProps) {
   // 🚀 正文内容的偏移控制
   const renderPos = { x: "12%", y: "12vh", width: "1100px" };
+
+  // ✨ 根据 slug 读取背景光晕颜色，未配置则默认橘色，设为 "none" 则不渲染光晕
+  const style = getBlogStyle(slug);
+  const glow = style.glowColor ?? "orange-500";
+  const hasGlow = glow !== "none";
+
+  // Tailwind 颜色 → RGB 值映射（用于内联 style，绕过 JIT 的动态类名限制）
+  const TAILWIND_RGB: Record<string, string> = {
+    "orange-500": "249, 115, 22",
+    "red-500":   "239, 68, 68",
+    "red-600":   "220, 38, 38",
+    "red-700":   "185, 28, 28",
+    "amber-500": "245, 158, 11",
+    "yellow-500":"234, 179, 8",
+    "emerald-500":"16, 185, 129",
+    "teal-500":  "20, 184, 166",
+    "sky-500":   "14, 165, 233",
+    "blue-500":  "59, 130, 246",
+    "purple-500":"168, 85, 247",
+    "pink-500":  "236, 72, 153",
+    "green-500": "34, 197, 94",
+  };
+  const glowRGB = TAILWIND_RGB[glow] ?? "249, 115, 22";
 
   return (
     <main className={`relative min-h-screen bg-[#000488] text-white overflow-x-hidden scroll-smooth`}>
@@ -106,13 +164,17 @@ export function BlogClient({ slug, content, toc }: BlogClientProps) {
         </article>
       </div>
 
-      <WhoAmI x={0} y={350} width={500} height={500} image="/image/friends/whoami.png" isTransparent={true} pageId={`blog_${slug}`} />
+      <WhoAmI x={0} y={350} width={500} height={500} image={getWhoAmIImage(slug)} isTransparent={true} pageId={`blog_${slug}`} />
       
-      {/* 氛围层 */}
-      <div className={`fixed top-[40%] right-[-10%] w-[700px] h-[600px] bg-orange-500/25 blur-[120px] rounded-full pointer-events-none z-0`} />
-      <div className={`fixed inset-0 bg-orange-500/5 mix-blend-overlay pointer-events-none z-[10]`} />
-      <div className={`fixed top-[40%] right-[-10%] w-[700px] h-[600px] bg-orange-500/35 blur-[120px] rounded-full pointer-events-none z-0`} />
-      <div className={`fixed inset-0 bg-orange-500/7 mix-blend-overlay pointer-events-none z-20`} />
+      {/* 氛围层 —— 颜色由 BLOG_STYLE_MAP 按 slug 控制，设为 "none" 时完全不渲染 */}
+      {hasGlow && (
+        <>
+          <div className={`fixed top-[40%] right-[-10%] w-[700px] h-[600px] blur-[120px] rounded-full pointer-events-none z-0`} style={{ backgroundColor: `rgba(${glowRGB}, 0.25)` }} />
+          <div className={`fixed inset-0 mix-blend-overlay pointer-events-none z-[10]`} style={{ backgroundColor: `rgba(${glowRGB}, 0.05)` }} />
+          <div className={`fixed top-[40%] right-[-10%] w-[700px] h-[600px] blur-[120px] rounded-full pointer-events-none z-0`} style={{ backgroundColor: `rgba(${glowRGB}, 0.35)` }} />
+          <div className={`fixed inset-0 mix-blend-overlay pointer-events-none z-20`} style={{ backgroundColor: `rgba(${glowRGB}, 0.07)` }} />
+        </>
+      )}
 
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar { width: 3px; }
@@ -120,7 +182,7 @@ export function BlogClient({ slug, content, toc }: BlogClientProps) {
           background: rgba(255, 255, 255, 0.05); 
           border-radius: 10px; 
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(249, 115, 22, 0.3); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(${glowRGB}, 0.3); }
         html { scroll-behavior: smooth; }
       `}</style>
     </main>

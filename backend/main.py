@@ -238,9 +238,20 @@ DIALOGUE_DATA = {
     "togethergif4_click":["表演绝活，虽然我本人不会","厉不厉害","这个骷髅头有点故事,以后告诉你"],
     "togetherusgif_click":["靠着你呢","靠着我呢"],
     "togetherchat_click":["想我了就和我聊聊天吧","always be here"],
-    
-
-
+    "bento_worm":["TickTickTicking"],
+    "blog_worm_entry":["蠢"],
+    "blog_worm_click":["叔本华是谁？",
+                  "欲望没有满足时，处于痛苦一端",
+                  "得到满足时，处于无聊一端",
+                  "这一秒痛苦，下一秒无聊",
+                  "无聊源自满足，而痛苦更显而易见",
+                  "无聊给无聊看",
+                  "不知道为什么无聊，因此无聊",
+                  "反正都一样吧",
+                  "那会多美好啊",
+                  "也有可能是苍蝇",
+                  "TickTickTicking"
+                  "记于2026.6.30"],   
 
 }
 
