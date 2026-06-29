@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import BrokenRecord from "@/components/magicui/broken-record";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        {/* ✨ 全局唱片 —— 跨页面常驻，音乐不中断 */}
+        <div className={`fixed top-15 right-73 z-[99999] pointer-events-auto w-70 h-70`}>
+          <BrokenRecord songs={[
+            "/audio/seeu.m4a",
+            "/audio/alex1.m4a",
+            "/audio/light.m4a",
+          ]} />
+        </div>
       </body>
     </html>
   );

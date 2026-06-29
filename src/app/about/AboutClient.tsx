@@ -5,7 +5,6 @@ import remarkGfm from "remark-gfm";
 import { WhoAmI } from "@/components/magicui/whoami";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { motion } from "framer-motion";
-import BrokenRecord from "@/components/magicui/broken-record";
 
 interface AboutClientProps {
   metadata: any;
@@ -14,15 +13,15 @@ interface AboutClientProps {
 
 export default function AboutClient({ metadata, content }: AboutClientProps) {
   // 🚀 坐标与宽度控制
-  const renderPos = { 
-    x: "15%", 
-    y: "15vh", 
-    width: "1000px" 
+  const renderPos = {
+    x: "15%",
+    y: "15vh",
+    width: "1000px"
   };
 
   return (
     <main className={`fixed inset-0 h-screen w-screen bg-[#000488] text-white overflow-hidden select-none`}>
-      
+
       {/* --- D. 返回按钮 --- */}
       <PosterModule
         x={1400} y={30} width={70} height={40} zIndex={10000}
@@ -30,15 +29,15 @@ export default function AboutClient({ metadata, content }: AboutClientProps) {
       />
 
       {/* --- A. 正文渲染区域 --- */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`relative z-10`} 
-        style={{ 
-          paddingLeft: renderPos.x, 
-          paddingTop: renderPos.y, 
-          width: '100%', 
-          maxWidth: renderPos.width 
+        className={`relative z-10`}
+        style={{
+          paddingLeft: renderPos.x,
+          paddingTop: renderPos.y,
+          width: '100%',
+          maxWidth: renderPos.width
         }}
       >
         {/* 1. 标题渲染 */}
@@ -62,26 +61,10 @@ export default function AboutClient({ metadata, content }: AboutClientProps) {
         </article>
       </motion.div>
 
-<div className={`fixed top-0 right-10 z-0 pointer-events-auto w-90 h-90`}>
-      <BrokenRecord image="/image/deco/songs.png" songs={[
-          "/audio/ShenHai.m4a",
-          "/audio/Warming.m4a",
-          "/audio/NightLight.m4a",
-          "/audio/SadnessBurialInReality.m4a",
-          "/audio/LeaveLikeLeaf.m4a",
-          "/audio/ICantTouchTheWind.m4a",
-          "/audio/CrossWhoILove.m4a",
-          "/audio/FlameYoung.m4a",
-          "/audio/AboveWind.m4a",
-          "/audio/MadMud.m4a",
-          // "/audio/Antent1.m4a"
-          // "/audio/friends/summer_night.mp3"
-]} />
-      </div>
       {/* 角色组件 */}
-      <WhoAmI 
-        x={0} y={350} width={500} height={500} 
-        image="/image/friends/whoami.png" isTransparent={true} pageId="about" 
+      <WhoAmI
+        x={0} y={350} width={500} height={500}
+        image="/image/friends/whoami.png" isTransparent={true} pageId="about"
       />
 
       {/* 氛围层 */}
@@ -98,8 +81,8 @@ export default function AboutClient({ metadata, content }: AboutClientProps) {
         }
 
         .prose p {
-          font-size: 1.15rem !important; 
-          line-height: 1.8 !important; 
+          font-size: 1.15rem !important;
+          line-height: 1.8 !important;
           margin-top: 1.2em !important;
           margin-bottom: 1.2em !important;
           color: rgba(255, 255, 255, 0.95) !important;

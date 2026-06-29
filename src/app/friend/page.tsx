@@ -2,7 +2,6 @@
 import { BentoGrid, BentoCard } from "@/components/magicui/bento-grid";
 import { FileTextIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { Marquee } from "@/components/magicui/marquee"
-import BrokenRecord from "@/components/magicui/broken-record";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { InteractiveEye } from "@/components/magicui/watcheye";
 import { WhoAmI } from "@/components/magicui/whoami";
@@ -466,13 +465,8 @@ export default function Home() {
         // triggerOn="click" dialogueId="xiaozhiqiao"
 
     />
-      <div className={`fixed top-15 right-73 z-0 pointer-events-auto w-70 h-70`}>
-      <BrokenRecord songs={[
-                      "/audio/friends.m4a",
-            ]} />
-          </div>
-    
-          <InteractiveEye 
+
+          <InteractiveEye
             x="89%" 
             y="43%" 
             size={100}
