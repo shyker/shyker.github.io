@@ -2,6 +2,7 @@
 import { BentoGrid, BentoCard } from "@/components/magicui/bento-grid";
 import { FileTextIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { Marquee } from "@/components/magicui/marquee"
+import BrokenRecord from "@/components/magicui/broken-record";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { InteractiveEye } from "@/components/magicui/watcheye";
 import { WhoAmI } from "@/components/magicui/whoami";
@@ -466,9 +467,16 @@ export default function Home() {
 
     />
 
+      {/* --- 唱片 --- */}
+      <div className={`fixed top-15 right-73 z-[99999] pointer-events-auto w-70 h-70`}>
+        <BrokenRecord songs={[
+          "/audio/friends.m4a",
+        ]} />
+      </div>
+
           <InteractiveEye
-            x="89%" 
-            y="43%" 
+            x="89%"
+            y="43%"
             size={100}
             frameImg="/image/eye/frame.png"  // 只有睫毛和眼眶
             irisImg="/image/eye/iris.png"    // 只有中间那个圆圆的眼珠

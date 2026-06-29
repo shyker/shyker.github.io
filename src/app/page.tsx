@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BentoGrid, BentoCard } from "@/components/magicui/bento-grid";
 import { FileTextIcon, Pencil1Icon, ChevronDownIcon } from "@radix-ui/react-icons";
+import BrokenRecord from "@/components/magicui/broken-record";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { InteractiveEye } from "@/components/magicui/watcheye";
 import { WhoAmI } from "@/components/magicui/whoami";
@@ -124,6 +125,15 @@ export default function Home() {
       {/* --- 视觉装饰组件 --- */}
       <InteractiveEye x="89%" y="43%" size={100} frameImg="/image/eye/frame.png" irisImg="/image/eye/iris.png" blinkImg="/image/eye/frame.png" />
       <InteractiveEye x="92%" y="31%" size={100} frameImg="/image/eye/frame.png" irisImg="/image/eye/iris.png" blinkImg="/image/eye/frame.png" />
+
+      {/* --- 唱片 --- */}
+      <div className={`fixed top-15 right-73 z-[99999] pointer-events-auto w-70 h-70`}>
+        <BrokenRecord songs={[
+          "/audio/seeu.m4a",
+          "/audio/alex1.m4a",
+          "/audio/light.m4a",
+        ]} />
+      </div>
 
       {/* --- 海报系列 --- */}
       <PosterModule x={60} y={200} width={280} height={240} zIndex={1} image="/image/shyler11.jpg" title="𝗔𝗯𝗼𝘂𝘁 𝗠𝗲" href="/about" description="..............Hi there" showTextAlways={true} hazy={false} softEdges={false} brightnessHover={true} isTransparent={true} flickerHover={true} />

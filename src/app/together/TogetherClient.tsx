@@ -7,6 +7,7 @@ import { WhoAmI } from "@/components/magicui/whoami";
 import { PosterModule } from "@/components/magicui/PosterModule";
 import { motion } from "framer-motion";
 import { PolaroidFrame } from "@/components/magicui/PolaroidFrame";
+import BrokenRecord from "@/components/magicui/broken-record";
 
 
 // ✨ 将 Props 接口名称修改为 TogetherClientProps
@@ -61,6 +62,13 @@ export function TogetherClient({ content }: TogetherClientProps) {
           </ReactMarkdown>
         </article>
       </motion.div>
+
+      {/* --- 唱片 --- */}
+      <div className={`fixed top-0 right-10 z-[99999] pointer-events-auto w-90 h-90`}>
+        <BrokenRecord image="/image/weusour/record1.png" songs={[
+          "/audio/whereismymind.m4a",
+        ]} />
+      </div>
 
       <PolaroidFrame
         images={ [
