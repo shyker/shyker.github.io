@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { WhoAmI } from "@/components/magicui/whoami";
 import { PosterModule } from "@/components/magicui/PosterModule";
+import Centipede from "@/components/magicui/centipede";
 
 // ✨ 每篇文章对应的 WhoAmI 插图映射表
 // key: slug (即 .md 文件名), value: 图片路径 (相对于 public 目录)
@@ -76,7 +77,10 @@ export function BlogClient({ slug, content, toc }: BlogClientProps) {
 
   return (
     <main className={`relative min-h-screen bg-[#000488] text-white overflow-x-hidden scroll-smooth`}>
-      
+
+      {/* --- 蜈蚣 —— 仅 worm 文章 --- */}
+      {slug === "worm" && <Centipede />}
+
       {/* --- D. 左上角返回按钮 --- */}
       <PosterModule
         x={1400} y={30} 
