@@ -23,6 +23,17 @@
 # misc
 .DS_Store
 *.pem
+project.zip
+
+# local workspace/app state
+.agents/
+.claude/
+.codex/
+.idea/
+.playwright-mcp/
+.ctf-analysis/
+/awesome-design-md/
+/DESIGN.md
 
 # debug
 npm-debug.log*
@@ -32,6 +43,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +51,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local blog CMS persistence
+/backend-java/data/
+/backend-java/target/
+
+# generated/local outputs
+/dist/
+/output/
+/tmp/
+
+# local/generated screenshots and one-off export helpers
+/motionsites-live.png
+/mythic-card.png
+/mythic-coded-early.png
+/mythic-coded-forge.png
+/mythic-local-desktop.png
+/mythic-open.png
+/snow-night-desktop.png
+/snow-night-mobile.png
+/build_ctf_resume.py
+/build_ctf_resume_docx.py
+/snow-night/*.log

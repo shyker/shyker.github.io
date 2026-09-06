@@ -1,0 +1,136 @@
+.remotion-scene {
+  overflow: hidden;
+  background: #020817;
+  font-family: "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+  color: white;
+}
+
+.r-bg,
+.r-road,
+.r-grade,
+.r-reflection,
+.r-fog,
+.r-vignette,
+.r-snow {
+  position: absolute;
+  inset: 0;
+}
+
+.r-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: 54% 58%;
+  filter: contrast(1.08) saturate(0.9) brightness(0.86);
+}
+
+.r-road {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.11;
+  mix-blend-mode: screen;
+  transform: perspective(1100px) rotateX(58deg) translateY(23%) scaleX(1.18);
+  mask-image: linear-gradient(to bottom, transparent 42%, rgba(0, 0, 0, 0.62) 70%, black);
+}
+
+.r-grade {
+  background:
+    linear-gradient(180deg, rgba(8, 22, 64, 0.18), rgba(1, 8, 24, 0.66)),
+    radial-gradient(circle at 64% 23%, rgba(185, 220, 255, 0.24), transparent 9%),
+    radial-gradient(circle at 55% 48%, rgba(97, 150, 255, 0.16), transparent 28%);
+  mix-blend-mode: screen;
+}
+
+.r-reflection {
+  background:
+    linear-gradient(98deg, transparent 18%, rgba(171, 209, 255, 0.28) 31%, transparent 39%),
+    linear-gradient(112deg, transparent 54%, rgba(205, 231, 255, 0.18) 60%, transparent 68%);
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(to bottom, transparent 45%, black 62%, black);
+  filter: blur(14px);
+}
+
+.r-lamp {
+  position: absolute;
+  left: 65.2%;
+  top: 19.8%;
+  width: 250px;
+  height: 250px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(245, 250, 255, 0.98), rgba(172, 209, 255, 0.32) 22%, transparent 68%);
+  mix-blend-mode: screen;
+}
+
+.r-fog {
+  background:
+    radial-gradient(ellipse at 50% 57%, rgba(190, 214, 255, 0.18), transparent 36%),
+    linear-gradient(90deg, transparent, rgba(157, 185, 233, 0.18), transparent);
+  mix-blend-mode: screen;
+  filter: blur(24px);
+  opacity: 0.58;
+}
+
+.r-ghost {
+  position: absolute;
+  width: 250px;
+  height: 410px;
+  object-fit: cover;
+  object-position: left center;
+  mix-blend-mode: screen;
+  filter: blur(2px);
+}
+
+.r-ghost-a {
+  left: 54%;
+  top: 37%;
+}
+
+.r-ghost-b {
+  left: 73%;
+  top: 46%;
+  object-position: right center;
+}
+
+.r-snow span {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: rgba(235, 244, 255, 0.95);
+  box-shadow: 0 0 10px rgba(180, 214, 255, 0.32);
+}
+
+.r-vignette {
+  background:
+    radial-gradient(ellipse at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 18%, transparent 78%, rgba(0, 0, 0, 0.5));
+}
+
+.r-title {
+  position: absolute;
+  left: 88px;
+  bottom: 76px;
+  width: 900px;
+  text-shadow: 0 4px 34px rgba(0, 0, 0, 0.78);
+}
+
+.r-title p {
+  margin: 0 0 14px;
+  color: #b7d7ff;
+  font-size: 27px;
+}
+
+.r-title h1 {
+  margin: 0;
+  font-size: 112px;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.r-title span {
+  display: block;
+  margin-top: 22px;
+  color: rgba(231, 242, 255, 0.78);
+  font-size: 30px;
+}

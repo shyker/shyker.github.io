@@ -1,0 +1,142 @@
+:global(html),
+:global(body) {
+  background-color: #1d1720;
+  background-image: url("/image/gallery/colosseum/colosseum-hero.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.scene {
+  --cursor-x: 50vw;
+  --cursor-y: 50vh;
+  --cursor-w: clamp(220px, 28vw, 420px);
+  --cursor-h: clamp(73px, 9.33vw, 140px);
+  --cursor-half-w: clamp(110px, 14vw, 210px);
+  --cursor-half-h: clamp(36.5px, 4.665vw, 70px);
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #1d1720;
+  background-image: url("/image/gallery/colosseum/colosseum-hero.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: none;
+  isolation: isolate;
+}
+
+.scene::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 2, 8, 0.03) 0%,
+    rgba(12, 6, 13, 0) 54%,
+    rgba(12, 6, 10, 0.16) 100%
+  );
+}
+
+.revealLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background-color: #b80000;
+  background-image: url("/image/gallery/colosseum/colosseum-reveal.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  clip-path: inset(
+    calc(var(--cursor-y) - var(--cursor-half-h))
+    calc(100% - var(--cursor-x) - var(--cursor-half-w))
+    calc(100% - var(--cursor-y) - var(--cursor-half-h))
+    calc(var(--cursor-x) - var(--cursor-half-w))
+  );
+  transition: opacity 120ms ease;
+}
+
+.sceneActive .revealLayer {
+  opacity: 1;
+}
+
+.cursorBox {
+  position: fixed;
+  left: var(--cursor-x);
+  top: var(--cursor-y);
+  z-index: 4;
+  width: var(--cursor-w);
+  height: var(--cursor-h);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 231, 207, 0.86);
+  box-shadow:
+    0 0 0 1px rgba(4, 5, 13, 0.45),
+    0 12px 40px rgba(0, 0, 0, 0.24);
+  transition: opacity 120ms ease;
+}
+
+.sceneActive .cursorBox {
+  opacity: 1;
+}
+
+.titleSafeArea {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 33vw;
+  height: 33vh;
+  pointer-events: none;
+}
+
+.backLink {
+  position: fixed;
+  left: clamp(18px, 2.4vw, 34px);
+  bottom: clamp(18px, 2.4vw, 34px);
+  z-index: 5;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 160ms ease;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.backLink:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 6px;
+}
+
+@media (max-width: 720px) {
+  .scene {
+    --cursor-w: 210px;
+    --cursor-h: 70px;
+    --cursor-half-w: 105px;
+    --cursor-half-h: 35px;
+    background-position: 66% center;
+  }
+
+  .revealLayer {
+    background-position: 66% center;
+  }
+
+  .titleSafeArea {
+    width: 42vw;
+    height: 30vh;
+  }
+}

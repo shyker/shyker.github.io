@@ -1,0 +1,178 @@
+.shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(184, 211, 255, 0.18), transparent 22%),
+    linear-gradient(180deg, #02083a 0%, #000488 58%, #00021b 100%);
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  width: min(100%, 1280px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  isolation: isolate;
+  background: #006dff;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.38);
+}
+
+.imageLayer,
+.skyTint,
+.vignette {
+  position: absolute;
+  inset: 0;
+}
+
+.imageLayer {
+  background-position: center 58%;
+  background-size: cover;
+  transform: scale(1.08);
+  transition:
+    opacity 680ms ease,
+    filter 680ms ease,
+    transform 900ms ease;
+  will-change: opacity, filter, transform;
+}
+
+.blueLayer {
+  filter: saturate(1.08) brightness(0.92) contrast(1.08);
+}
+
+.redLayer {
+  opacity: 0;
+  filter: saturate(1.4) contrast(1.08) brightness(1.06);
+  mix-blend-mode: normal;
+}
+
+.sceneRed .blueLayer {
+  filter: saturate(0.88) brightness(0.58) contrast(1.16);
+  transform: scale(1.12);
+}
+
+.sceneRed .redLayer {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.skyTint {
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 79% 18%, rgba(242, 246, 255, 0.26), transparent 9%),
+    linear-gradient(180deg, rgba(2, 66, 205, 0.1), rgba(0, 6, 59, 0.24));
+  mix-blend-mode: screen;
+  transition: opacity 500ms ease, background 680ms ease;
+}
+
+.sceneRed .skyTint {
+  background:
+    radial-gradient(circle at 79% 18%, rgba(255, 32, 44, 0.32), transparent 12%),
+    radial-gradient(circle at 79% 18%, rgba(255, 204, 204, 0.18), transparent 20%),
+    linear-gradient(180deg, rgba(0, 126, 255, 0.06), rgba(110, 0, 28, 0.26));
+}
+
+.vignette {
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, transparent 48%, rgba(0, 0, 32, 0.3) 100%),
+    linear-gradient(0deg, rgba(0, 0, 22, 0.34), transparent 36%);
+}
+
+.moon {
+  position: absolute;
+  z-index: 4;
+  top: 7%;
+  right: 10%;
+  width: clamp(54px, 7vw, 96px);
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transform: translateZ(0);
+}
+
+.moon:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.86);
+  outline-offset: 8px;
+}
+
+.moonCore,
+.moonGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition:
+    background 500ms ease,
+    box-shadow 500ms ease,
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+
+.moonCore {
+  z-index: 2;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.98), rgba(220, 232, 255, 0.9) 44%, rgba(176, 197, 245, 0.8) 72%);
+  box-shadow:
+    inset -12px -10px 20px rgba(87, 105, 159, 0.22),
+    0 0 26px rgba(210, 229, 255, 0.62),
+    0 0 90px rgba(123, 178, 255, 0.32);
+}
+
+.moonGlow {
+  z-index: 1;
+  opacity: 0.8;
+  transform: scale(1.45);
+  background: radial-gradient(circle, rgba(213, 229, 255, 0.38), transparent 62%);
+}
+
+.sceneRed .moonCore {
+  background:
+    radial-gradient(circle at 34% 30%, #ffd1d1, #ff1a2d 46%, #a50018 78%);
+  box-shadow:
+    inset -12px -10px 20px rgba(82, 0, 12, 0.34),
+    0 0 30px rgba(255, 15, 38, 0.86),
+    0 0 120px rgba(255, 0, 38, 0.58);
+}
+
+.sceneRed .moonGlow {
+  opacity: 1;
+  transform: scale(2.45);
+  background: radial-gradient(circle, rgba(255, 0, 38, 0.45), transparent 66%);
+}
+
+.backLink {
+  position: absolute;
+  z-index: 5;
+  left: clamp(14px, 2vw, 28px);
+  top: clamp(14px, 2vw, 28px);
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.backLink:hover {
+  color: white;
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding: 12px;
+  }
+
+  .scene {
+    width: 100%;
+  }
+
+  .imageLayer {
+    background-position: center bottom;
+  }
+}

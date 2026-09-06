@@ -1,0 +1,16 @@
+[Unit]
+Description=Shyler blog content API
+After=network.target
+
+[Service]
+User=shyler-blog
+WorkingDirectory=/opt/shyler-blog/backend-java
+EnvironmentFile=/etc/shyler-blog.env
+ExecStart=/usr/bin/java -jar /opt/shyler-blog/backend-java/blog-api.jar
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

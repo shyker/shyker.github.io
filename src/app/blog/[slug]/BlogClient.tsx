@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { WhoAmI } from "@/components/magicui/whoami";
@@ -150,10 +149,13 @@ export function BlogClient({ slug, content, toc }: BlogClientProps) {
               img: ({ src, ...props }) => {
                 if (!src || typeof src !== 'string') return null;
                 const fileName = src.split('/').pop() || "";
+                const resolvedSrc = /^(https?:)?\/\//.test(src) || src.startsWith("/") || src.startsWith("data:")
+                  ? src
+                  : `/posts/${slug}/${fileName}`;
                 return (
                   <span className={`block my-12 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black/20`}>
                     <img 
-                      src={`/posts/${slug}/${fileName}`} 
+                      src={resolvedSrc}
                       className={`w-full h-auto opacity-95 hover:opacity-100 transition-opacity duration-500`} 
                       {...props} 
                       alt={props.alt || "blog-image"}

@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "snow:dev": "vite --config snow-night/vite.config.ts --host 0.0.0.0",
+    "snow:build": "vite build --config snow-night/vite.config.ts",
+    "snow:preview": "vite preview --config snow-night/vite.config.ts --host 0.0.0.0",
+    "remotion:preview": "remotion preview snow-night/remotion/index.ts",
+    "remotion:render": "remotion render snow-night/remotion/index.ts SnowNight video/snow-night.mp4",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -11,17 +16,23 @@
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-slot": "^1.2.4",
+    "@remotion/cli": "^4.0.487",
+    "@vitejs/plugin-react": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.26.2",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^3.4.0"
+    "remotion": "^4.0.487",
+    "tailwind-merge": "^3.4.0",
+    "three": "^0.185.1",
+    "vite": "^8.1.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -29,11 +40,28 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.180.0",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shyker/shyker.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shyker/shyker.github.io/issues"
+  },
+  "homepage": "https://github.com/shyker/shyker.github.io#readme"
 }

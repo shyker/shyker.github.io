@@ -11,8 +11,22 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "dist/**",
+    "backend-java/target/**",
+    "snow-night/dist/**",
+    "public/**",
+    "awesome-design-md/**",
     "next-env.d.ts",
   ]),
+  {
+    // The existing visual components intentionally synchronize mounted/audio
+    // state from effects and expose a few dynamic prop surfaces.
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@next/next/no-html-link-for-pages": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

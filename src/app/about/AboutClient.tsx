@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import BrokenRecord from "@/components/magicui/broken-record";
 
 interface AboutClientProps {
-  metadata: any;
+  metadata: { title?: string };
   content: string;
 }
 

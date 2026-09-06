@@ -1,0 +1,96 @@
+可以把它理解成一条“AI 生成素材 + 前端实时动效 + 视频导出”的流水线。
+
+**推荐路线**
+1. **Codex 负责搭项目和写代码**
+   你给 Codex 一张参考图、动效描述、技术栈要求，比如：
+   ```text
+   用 Vite + React + Three.js + GSAP 做一个雪夜街道动态前端展示。
+   背景使用参考图，添加 canvas 雪花粒子、湿路面反射、幽灵人影淡入淡出、路灯随机闪烁。
+   要可全屏展示，支持 16:9，并保留导出视频的 Remotion 版本。
+   ```
+   Codex 可以直接生成项目、安装依赖、写组件、跑本地预览、截图检查。
+
+2. **Imagegen 负责生成视觉素材**
+   用 Imagegen 先做：
+   - 背景图：雪夜街道、湿路面、路灯、电线、日式老街。
+   - 透明 PNG/WebP 素材：幽灵人形、雪粒贴图、路灯光晕、雾气层。
+   - 路面贴图：积雪、雪泥、水痕、反光粗糙度。
+
+   生成后再交给前端处理动态，不要把所有动态都丢给图像模型。
+
+3. **Three.js 负责空间感和粒子**
+   Three.js 适合：
+   - 雪花粒子系统
+   - 雾气深度
+   - 光晕、Bloom、后期处理
+   - 2.5D 分层场景
+   - 近景/中景/远景雪花速度差
+
+   官方仓库是 [mrdoob/three.js](https://github.com/mrdoob/three.js)，它就是浏览器 3D/WebGL 动画的核心库之一。
+
+4. **GSAP 负责时间线和细节动效**
+   GSAP 适合控制：
+   - 幽灵人影淡入淡出
+   - 路灯随机闪烁
+   - 镜头缓慢推进
+   - 雾气、透明度、滤镜变化
+   - UI 入场动画
+
+   官方仓库是 [greensock/GSAP](https://github.com/greensock/GSAP)，定位是现代 Web 的 JavaScript 动画库。
+
+5. **Remotion 负责“把前端变成视频”**
+   如果你要导出 MP4，就用 Remotion。它的思路是：用 React 写视频画面，每一帧都可控，然后渲染成视频。官方仓库 [remotion-dev/remotion](https://github.com/remotion-dev/remotion) 明确写的是“Make videos programmatically with React”，并提供 `npx create-video@latest` 初始化方式。
+
+   适合做：
+   - AI 视频片头
+   - 产品动态展示
+   - 音乐可视化
+   - 图像转动态短片
+   - 可批量生成的短视频模板
+
+**一个实用技术组合**
+```txt
+Vite + React
+Three.js / React Three Fiber
+GSAP
+Remotion
+WebP / PNG / AVIF 素材
+Canvas 粒子层
+CSS mix-blend-mode / filter / backdrop-filter
+可选：postprocessing / drei / framer-motion
+```
+
+**你的雪夜图可以这样拆**
+```txt
+背景层：原图或 Imagegen 扩图后的雪夜街道
+雪花层：Three.js Points 或 Canvas 粒子
+路面层：半透明水痕、反射光、雪泥纹理
+幽灵层：2D WebP/PNG sprite，GSAP 控制 opacity 和 blur
+灯光层：路灯 glow，GSAP 随机 flicker
+雾气层：半透明 noise 纹理缓慢移动
+镜头层：轻微 push-in 或 parallax
+```
+
+**Codex 里可以这样下任务**
+```text
+请创建一个 Vite React 项目，实现一个 16:9 全屏动态场景：
+1. 使用我提供的雪夜街道图作为背景。
+2. 用 Three.js 或 Canvas 实现有深度层次的下雪粒子。
+3. 用 GSAP 控制路灯随机闪烁，不规律、克制。
+4. 添加 3 组半透明幽灵人影，低频淡入淡出。
+5. 路面添加湿润反光和积雪质感。
+6. 再创建一个 Remotion composition，可以导出 10 秒 MP4。
+7. 启动本地 dev server，并告诉我预览地址。
+```
+
+**GitHub/Skill 方向**
+- Remotion 官方项目：适合“React 生成视频”和 Codex agent 工作流，仓库里也有 `Agent Skills` 文档入口。
+- Three.js 官方项目：适合 WebGL、粒子、后期处理、3D 场景。
+- GSAP 官方项目：适合高质量时间线动画。
+- React Three Fiber：如果你用 React 写 Three.js，会比原生 Three.js 更适合组件化。
+- Drei：React Three Fiber 的常用辅助组件库。
+- pmndrs/postprocessing：做 Bloom、Vignette、色散、景深等电影感后期。
+
+关于 **Hyperframe**：我不确定你指的是哪个具体项目/产品，名字相近的项目比较多。如果你说的是某个 AI 视频/前端生成工具，最好给我它的链接，我可以帮你判断它应该放在“素材生成”“页面生成”还是“视频导出”这一环。
+
+最稳的方案是：**Imagegen 出素材，Codex 写 Vite/React/Three/GSAP 交互页面，Remotion 复用同一套组件导出视频**。这样既能网页展示，也能产出成片。
